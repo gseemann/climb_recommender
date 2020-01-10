@@ -153,3 +153,16 @@ def route_to_tup(list_of_dict):
         list_of_tuples.append(temp_tuple)
     db_insert(list_of_tuples)
 
+    
+    
+def route_info_to_db(info):
+    connect()
+    insert_statement = """INSERT IGNORE INTO route_description(
+                    id,
+                    info)
+                    VALUES (%s,%s)"""
+
+    cursor.execute(insert_statement, info)
+    cnx.commit()
+    cursor.close()
+    cnx.close()
