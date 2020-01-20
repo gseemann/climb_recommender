@@ -449,11 +449,12 @@ def get_route_details(route_id):
                 return i+1
         return 0    
 
+    #clean routes missing grade
+    df['rating'] =df['rating'].apply(lambda x: '_' if x=='' else x)
     #make grades and danger numeric
-    df['rope_grade']=df['rating'].apply(lambda x: get_rope_grades(x,'Rope'))
-    df['boulder_grade']=df['rating'].apply(lambda x: get_rope_grades(x,'Boulder'))
-    df['danger']=df['rating'].apply(lambda x: get_rope_grades(x,'Safety'))
-
+    df['rope_grade']=df['rating'].apply(lambda x: get_rope_grades(x.split()[0],'Rope'))
+    df['boulder_grade']=df['rating'].apply(lambda x: get_rope_grades(x.split()[0],'Boulder'))
+    df['danger']=df['rating'].apply(lambda x: get_rope_grades(x.split()[-1],'Safety'))
 
     ##add on description
     df['infos']='-'.join(description)
