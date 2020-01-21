@@ -386,6 +386,7 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
 
 
     rec=get_recommendations(target_index, cosine_similarity)
+    pd.set_option('max_colwidth', 100)
     return rec
 
 

@@ -29,15 +29,22 @@ radius_range = st.number_input('Enter radius to search in specified area:', defa
 
 #once button pressed we check for input errors and start search
 test = st.button('Search for recommended climbs')
+# pd.set_option('max_colwidth', 100)
 
 if test:
 	if climb_id:
+		#spinner
+		#below lines show we are done
+		if len(climb_id)>10:
+			climb_id = climb_id.split('/')[-2]
+		#else we have climb id lets look it up
 		st.success('Searching for similar climbs in that area')
 		#call function and pass id, city, state, zip and radius
 		#fxn returns df of 10 most similar climbs in search range
 		st.dataframe(models.get_wrecked(target_id=climb_id, target_state=state,target_city=city,
 			target_zipcode=zip_code,target_radius_range=radius_range,star_limit=3.5))
-
+		st.success('Finished')
+		st.balloons()
 		#RUN recommender
 	else:
 		st.error('Please enter a valid ID/url into the climb id box')
