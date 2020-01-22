@@ -44,7 +44,7 @@ Content based climbing recommendation system. Information about ~36,000 climbs (
   - User selects
    - Difficulty rating, Sport/Trad, # of pitches
    - Keyword selection:
-    - Crimp, crack, overhung, corner, slab etc
+     - Crimp, crack, overhung, corner, slab etc
 - Scrape additional websites for climb descriptions
 - Rerun/tweak LDA to add in  topic modeling
 - Create a user based recommendation system from mountain projects profiles
