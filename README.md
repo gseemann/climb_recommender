@@ -37,7 +37,7 @@ Content based climbing recommendation system. Information from ~36,000 climbs (m
 ![](climb_type.png)
 
 ### This shows the counts for the amount of climbs containing keywords
-![](climb_description_type.png)
+![](climb_style_type.png)
 
 ## Next Steps
 - Build system that allows user to ask for match based on features rather than an actual climb
