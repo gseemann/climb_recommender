@@ -1,7 +1,7 @@
 # climb_recommender
 
 ## Description
-Content based climbing recommendation system. Information about ~36,000 climbs (mostly across North America) 
+Content based climbing recommendation system. Information from ~36,000 climbs (mostly across North America) 
 - User provides
  - Reference climb
  - Zip code, or city & state
