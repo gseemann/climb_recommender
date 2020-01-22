@@ -3,7 +3,12 @@ from PIL import Image
 import models
 import pandas as pd 
 
+
 default_range =60
+
+#sidebars
+st.sidebar.header('Info')
+st.sidebar.text('subsection')
 
 #test/title
 st.title("Climb Recommender")
@@ -13,7 +18,7 @@ st.image(img, caption='El Cajon Mountain, San Diego')
 
 #header
 st.header('Input the reference climb using Mountain Project ID')
-st.subheader('You can include search area(using zip or city & state) and radius range in miles')
+st.subheader('You can include search area(using zip or city & state) and radius range in miles, \n https://www.mountainproject.com/area/classics <- link to climbs')
 
 #ask user for input
 climb_id = st.text_input('Enter target climb ID (or mountain project url for target climb):')
@@ -31,6 +36,7 @@ radius_range = st.number_input('Enter radius to search in specified area:', defa
 test = st.button('Search for recommended climbs')
 # pd.set_option('max_colwidth', 100)
 
+#run recommender
 if test:
 	if climb_id:
 		#spinner
@@ -51,7 +57,8 @@ if test:
 		#ERROR please input a target climb
 
 
-
+img2 = Image.open('09A21D41-981D-4FC1-A359-74653420A488_1_105_c.jpeg')
+st.image(img2, caption='View of the Witch in the Needles, CA')
 
 
 
