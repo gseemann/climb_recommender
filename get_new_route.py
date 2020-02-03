@@ -464,16 +464,19 @@ def get_route_details(route_id):
                  'hand', 'hands', 'arch', 'balancy', 'balance', 'jug', 'squeeze', 'mantel', 'sustained',  
                  'ramp', 'overhung', 'dihedral', 'sporty', 'heady', 'pump', 'pumpy', 'technical',
                  'run out', 'mental', 'well protected', 'chimney', 'offwidth', 'stem', 'arete', 'exposed', 'exposure',
-                 'crimp','crimpy', 'vertical', 'slabby', 'cave', 'steep', 'bouldery', 'powerful']
-    col_key_words = ['slab', 'traverse', 'roof', 'corner', 'crack', 'face','flake', 'fingers',
+                 'crimp','crimpy', 'vertical', 'slabby', 'cave', 'steep', 'bouldery', 'powerful','runout','run-out']
+    #the above key words will be mapped to the below subset of words
+    col_key_words = ['slab', 'traverse', 'roof', 'corner', 'crack', 'hand', 'face','flake', 'fingers',
                      'jug', 'exposed', 'dihedral', 'sustained', 'technical','run out', 'well protected',
                      'chimney', 'offwidth', 'stem', 'arete','crimp', 'vertical', 'powerful']
     sym_map = {
      'finger':'fingers',
-     'hands':'crack',
+     'hands':'hand',
      'arch': 'roof',
      'balancy':'technical',
      'heady':'run out',
+     'runout':'run out',
+     'run-out':'run out',
      'pumpy':'sustained',
      'exposure':'exposed',
      'crimpy':'crimp',
@@ -489,7 +492,6 @@ def get_route_details(route_id):
      'mantel':'technical',
      'sporty':'well protected',
      'pump':'sustained',
-     'hand':'crack',
      'jam':'crack'
     }
     #making columns
@@ -505,7 +507,7 @@ def get_route_details(route_id):
         df[v] = df['infos'].apply(lambda x: 1 if k in str(x) else 0)   
 
     #write to csv and well add to our main df in a moment
-    df.to_csv('target_climb.csv')
+    df.to_csv('data/target_climb.csv')
     
     #success
     return 1
