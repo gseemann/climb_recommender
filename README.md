@@ -9,7 +9,7 @@ Content based climbing recommendation system. Information about ~36,000 climbs (
  - Program then displays reference climb details and top 10 matches
  
 ## Demo
-- Video link(coming soon)
+- https://youtu.be/ev32cSixTOA
  
 ## Features
 - General features include
