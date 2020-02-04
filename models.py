@@ -1,18 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # ML Models
-
-# ## Import Libraries & Load Dataframe from AWS DB
-
-# In[1]:
-
-
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
-# get_ipython().run_line_magic('matplotlib', 'inline') 
 from sklearn import preprocessing
 from math import sin, cos, sqrt, atan2, radians
 
@@ -20,27 +8,34 @@ import query_helper
 import get_new_route
 import json
 
+#for rec model
+from sklearn.metrics.pairwise import linear_kernel
+from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import polynomial_kernel
+from sklearn.metrics.pairwise import sigmoid_kernel
+from sklearn.metrics.pairwise import rbf_kernel
+from sklearn.metrics.pairwise import laplacian_kernel
+from sklearn.metrics.pairwise import chi2_kernel
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import minmax_scale
+from sklearn.preprocessing import MaxAbsScaler
+from sklearn.preprocessing import StandardScaler
 
-# In[2]:
+# function is passed climb id and search params and return top 10 recommended climbs
 def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=None,target_radius_range= 60,star_limit=3.5):
 
-    df_numeric = pd.read_csv('df.csv', index_col='id')
+
+    df_numeric = pd.read_csv('data/df.csv', index_col='id')
     #reorder columns
     df_numeric =df_numeric[['name', 'rating', 'stars', 'starVotes', 'pitches', 'location', 'region',
                                    'area', 'sub_area', 'wall', 'longitude', 'latitude', 'url', 'Sport',
                                    'Trad', 'Boulder', 'TR', 'Alpine', 'Aid', 'Ice', 'Snow', 'Mixed',
                                    'danger', 'rope_grade', 'boulder_grade', 'infos', 'slab', 'traverse',
-                                   'roof', 'corner', 'crack', 'face', 'flake', 'fingers', 'jug', 'exposed',
+                                   'roof', 'corner', 'crack', 'hand', 'face', 'flake', 'fingers', 'jug', 'exposed',
                                    'dihedral', 'sustained', 'technical', 'run out', 'well protected',
                                    'chimney', 'offwidth', 'stem', 'arete', 'crimp', 'vertical', 'powerful',
                                    'in_range']]
-    df_numeric.head()
-
-
-    # ## Get input from user for recommendation
-
-    # In[3]:
-
 
     target_id = int(target_id)
     # # target_lat = 32.9127 
@@ -53,19 +48,14 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
     target_radius_range = int(target_radius_range)
 
     star_limit = int(star_limit)
-    ###other parameters to be added here later
 
 
     # ### Get coordinates for zip or city
-
-    # In[ ]:
-
-
-    with open('us-zip-code-latitude-and-longitude.json') as f:
+    with open('data/us-zip-code-latitude-and-longitude.json') as f:
       coord_dict = json.load(f)
 
 
-    # In[ ]:
+    # In[5]:
 
 
     def get_coords(target_city=None, target_state=None, zipcode=None):
@@ -79,23 +69,19 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
         return None, None
 
 
-    # In[ ]:
+    # In[6]:
 
 
     target_lat, target_lon = get_coords(target_city, target_state, target_zipcode)
 
 
-    # In[ ]:
+    # In[7]:
 
 
     print(target_lat, target_lon)
 
 
-    # ### Create fxn to see if climb is in search range
-
-    # In[ ]:
-
-
+    ## Create fxn to see if climb is in search range
     #function takes search param range and assigns to original df if climb in_range
     def in_range(df_fxn, lat, lon, radius_range=None):
         if radius_range:
@@ -128,9 +114,6 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
             df_fxn['in_range'] =1
 
 
-    # In[ ]:
-
-
     def star_cutoff(df_fxn, star_limit=3.5):
         for index, row in df_fxn.iterrows():
             #assign in_range col to 1 if the climb is in range
@@ -139,63 +122,14 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
             else:
                 df_fxn.at[index,'in_range']=0   
 
-
-    # # In[ ]:
-
-
-    # df_numeric.iloc[0,:]
-
-
-    # # In[ ]:
-
-
-    # df_numeric.loc[target_id,:]
-
-
-    # In[ ]:
-
-
-    # ##difficulity cutoff, function not run until climb is in df
-    # def diff_cutoff(df_fxn, delta=6, target_grade):
-    #     if df_fxn.loc[target_id,'Boulder']==0:
-    #         target_grade = df_fxn.loc[target_id,'rope_grade']
-    #         for index, row in df_fxn.iterrows():
-    #             #assign in_range col to 1 if the climb is in range
-    #             if (df_fxn.at[index, 'rope_grade'] <= target_grade+delta)&(df_fxn.at[index, 'rope_grade'] >= target_grade-delta)
-    #                 &(df_fxn.at[index, 'in_range']!=0):
-    #                 df_fxn.at[index,'in_range']=1
-    #             else:
-    #                 df_fxn.at[index,'in_range']=0                
-
-
-    # ### Call function to assign if climb in range
-
-    # In[ ]:
-
-
     ## used to get list of climbs allowed for comparison
     in_range(df_numeric, lat = target_lat, lon = target_lon, radius_range=target_radius_range)
 
 
     # ### Star cutoff (ie only give results for routes with above 3.5 stars)
-
-    # In[ ]:
-
-
     star_cutoff(df_numeric, star_limit)
 
-
-    # In[ ]:
-
-
-    df_numeric.in_range.value_counts()
-
-
     # ### To begin, see if if the climb already exists in db
-
-    # In[ ]:
-
-
     if target_id in df_numeric.index:
         print('We have climb already')
         #make sure reference climb is assigned in_range
@@ -204,7 +138,7 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
         print('Making API call and Scraping climb data')
         if(get_new_route.get_route_details(target_id)):
             #the function in the if statement saves target climb to target_climb.csv and returns 1
-            df_target= pd.read_csv('target_climb.csv', index_col= 'id')
+            df_target= pd.read_csv('data/target_climb.csv', index_col= 'id')
             df_target.drop(columns=['Unnamed: 0'], inplace=True)
             df_target['in_range'] = 1
             #order the same as df_numeric columns
@@ -212,7 +146,7 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
                                    'area', 'sub_area', 'wall', 'longitude', 'latitude', 'url', 'Sport',
                                    'Trad', 'Boulder', 'TR', 'Alpine', 'Aid', 'Ice', 'Snow', 'Mixed',
                                    'danger', 'rope_grade', 'boulder_grade', 'infos', 'slab', 'traverse',
-                                   'roof', 'corner', 'crack', 'face', 'flake', 'fingers', 'jug', 'exposed',
+                                   'roof', 'corner', 'crack', 'hand', 'face', 'flake', 'fingers', 'jug', 'exposed',
                                    'dihedral', 'sustained', 'technical', 'run out', 'well protected',
                                    'chimney', 'offwidth', 'stem', 'arete', 'crimp', 'vertical', 'powerful',
                                    'in_range']]
@@ -222,115 +156,23 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
             print("Something went wrong")
 
 
-    # In[ ]:
-
-
-    df_numeric.tail()
-
-
-    # ### Diff_grade cutoff WIP
-
-    # In[ ]:
-
-
-    ###WIP call grade range function
-    # pass in deets for target climb
-
-
-    # ## Reccomender
-
-    # #### Kernel Imports
-
-    # In[ ]:
-
-
-    # Import kernels
-    from sklearn.metrics.pairwise import linear_kernel
-    from sklearn.metrics.pairwise import euclidean_distances
-    from sklearn.metrics.pairwise import cosine_similarity
-    from sklearn.metrics.pairwise import polynomial_kernel
-    from sklearn.metrics.pairwise import sigmoid_kernel
-    from sklearn.metrics.pairwise import rbf_kernel
-    from sklearn.metrics.pairwise import laplacian_kernel
-    from sklearn.metrics.pairwise import chi2_kernel
-
-
-    # In[ ]:
-
-
-    from sklearn.preprocessing import MinMaxScaler
-    from sklearn.preprocessing import minmax_scale
-    from sklearn.preprocessing import MaxAbsScaler
-    from sklearn.preprocessing import StandardScaler
-
-
-    # #### Create df_in_range to run recommender in subset
-
-    # In[ ]:
-
-
-    df_in_range = df_numeric[df_numeric['in_range']==1].reset_index()     
+    #### Create df_in_range to run recommender in subset
+    df_in_range = df_numeric[df_numeric['in_range']==1].reset_index()      
     target_index =df_in_range.index[df_in_range['id']==target_id][0] #store target climb index in subset that will be compared
-    df_in_range.shape
 
-
-    # In[ ]:
-
-
-    df_in_range.iloc[target_index]
-
-
-    # In[ ]:
-
-
-    target_index
-
-
-    # In[ ]:
-
-
-    df_in_range.tail()
-
-
-    # ### Scale Features
-
-    # #### Create Features DF
-
-    # In[ ]:
 
 
     #creates features from df_in_range used for comparison
     features = df_in_range.loc[:,['stars', 'pitches', 'Sport', 'Trad', 'Boulder', 'TR', 'Alpine', 'Aid',
            'Ice', 'Snow', 'Mixed', 'danger', 'rope_grade', 'boulder_grade', 'slab', 'traverse', 'roof', 
-                    'corner', 'crack', 'face','flake', 'fingers',
+                    'corner', 'crack', 'hand', 'face','flake', 'fingers',
                      'jug', 'exposed', 'dihedral', 'sustained', 'technical','run out', 'well protected',
                      'chimney', 'offwidth', 'stem', 'arete','crimp', 'vertical', 'powerful']] #,'longitude','latitude',
 
 
-    # In[ ]:
-
-
-    features.shape
-
-
-    # In[ ]:
-
-
-    # features.iloc[:,[12,13]]
-
-
-    # #### Pick scaling type (AND UPDATE WEIGHTS)
-
-    # In[ ]:
-
 
     min_max_scaler = MinMaxScaler()
     scalar = StandardScaler()
-
-
-    # In[ ]:
-
-
     ##### Pick a scaling option ###############################
 
     # features_scaled = scalar.fit_transform(features)
@@ -352,7 +194,7 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
 
     # #### Rec function
 
-    # In[ ]:
+    # In[30]:
 
 
     def get_recommendations(idx, kernel_type):
@@ -383,24 +225,12 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
 
 
 
-
-
     rec=get_recommendations(target_index, cosine_similarity)
-    pd.set_option('max_colwidth', 100)
-    return rec
-
-
-    # # In[ ]:
-
-
-    # rec=get_recommendations(target_index, rbf_kernel)
-    # rec
-
-
-    # # In[ ]:
-
-
-    # rec=get_recommendations(target_index, laplacian_kernel)
-    # rec
-
-
+    rec = rec[['name', 'rating', 'stars', 'starVotes', 'pitches', 'location', 'region',
+                                   'area', 'sub_area', 'wall', 'longitude', 'latitude', 'url', 'Sport',
+                                   'Trad', 'Boulder', 'TR', 'Alpine', 'Aid', 'Ice', 'Snow', 'Mixed',
+                                   'danger', 'rope_grade', 'boulder_grade', 'infos', 'slab', 'traverse',
+                                   'roof', 'corner', 'crack', 'hand', 'face', 'flake', 'fingers', 'jug', 'exposed',
+                                   'dihedral', 'sustained', 'technical', 'run out', 'well protected',
+                                   'chimney', 'offwidth', 'stem', 'arete', 'crimp', 'vertical', 'powerful']]
+    return rec 
