@@ -14,7 +14,7 @@ default_range =15
 st.title("Climb Recommender")
 
 # img = Image.open('figures/8561A9D4-5B9B-4973-A54E-22BC5544AD6F_1_105_c.jpeg')
-st.image(img, caption='El Cajon Mountain, San Diego')
+# st.image(img, caption='El Cajon Mountain, San Diego')
 
 #header
 st.header('Input the reference climb using Mountain Project ID')
@@ -58,7 +58,7 @@ if test:
 
 
 # img2 = Image.open('figures/09A21D41-981D-4FC1-A359-74653420A488_1_105_c.jpeg')
-st.image(img2, caption='View of the Witch in the Needles, CA')
+# st.image(img2, caption='View of the Witch in the Needles, CA')
 
 
 
