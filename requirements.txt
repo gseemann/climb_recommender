@@ -1,7 +1,6 @@
 streamlit==0.53.0
 numpy==1.18.1
 pandas==1.0.3
-python==3.7.0
 requests==2.23.0
 scikit-image==0.16.2
 scikit-learn==0.22
