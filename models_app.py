@@ -1,11 +1,9 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from math import sin, cos, sqrt, atan2, radians
 
-import query_helper
-import get_new_route
 import json
 
 #for rec model
@@ -134,26 +132,10 @@ def get_wrecked(target_id, target_state=None,target_city=None,target_zipcode=Non
         print('We have climb already')
         #make sure reference climb is assigned in_range
         df_numeric.loc[target_id,'in_range']=1
-    else:
-        print('Making API call and Scraping climb data')
-        if(get_new_route.get_route_details(target_id)):
-            #the function in the if statement saves target climb to target_climb.csv and returns 1
-            df_target= pd.read_csv('data/target_climb.csv', index_col= 'id')
-            df_target.drop(columns=['Unnamed: 0'], inplace=True)
-            df_target['in_range'] = 1
-            #order the same as df_numeric columns
-            df_target = df_target[['name', 'rating', 'stars', 'starVotes', 'pitches', 'location', 'region',
-                                   'area', 'sub_area', 'wall', 'longitude', 'latitude', 'url', 'Sport',
-                                   'Trad', 'Boulder', 'TR', 'Alpine', 'Aid', 'Ice', 'Snow', 'Mixed',
-                                   'danger', 'rope_grade', 'boulder_grade', 'infos', 'slab', 'traverse',
-                                   'roof', 'corner', 'crack', 'hand', 'face', 'flake', 'fingers', 'jug', 'exposed',
-                                   'dihedral', 'sustained', 'technical', 'run out', 'well protected',
-                                   'chimney', 'offwidth', 'stem', 'arete', 'crimp', 'vertical', 'powerful',
-                                   'in_range']]
-            
-            df_numeric = pd.concat([df_numeric, df_target])
-        else:
-            print("Something went wrong")
+    else:   #climb is not in db and we tell user to select a different climb
+        return pd.DataFrame(np.array(['You selected a climb outside database']),
+                   columns=['ERROR'])
+        
 
 
     #### Create df_in_range to run recommender in subset
