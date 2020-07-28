@@ -4,7 +4,7 @@ import models_app
 import pandas as pd 
 
 
-default_range =15
+default_range =20
 
 #sidebars
 # st.sidebar.header('Info')
@@ -13,8 +13,8 @@ default_range =15
 #test/title
 st.title("Climb Recommender")
 
-# img = Image.open('figures/8561A9D4-5B9B-4973-A54E-22BC5544AD6F_1_105_c.jpeg')
-# st.image(img, caption='El Cajon Mountain, San Diego')
+img = Image.open('figures/8561A9D4-5B9B-4973-A54E-22BC5544AD6F_1_105_c.jpeg')
+st.image(img, caption='El Cajon Mountain, San Diego')
 
 #header
 st.header('Input the reference climb using Mountain Project ID')
@@ -28,7 +28,7 @@ st.info('Or search by city and state')
 city = st.text_input('Enter city to search in that area:', '')
 state = st.text_input('Enter state to search in that area:', '')
 
-st.text('Lastly, enter the search radius (defaults to 60 miles)')
+st.text('Lastly, enter the search radius (defaults to 20 miles)')
 radius_range = st.number_input('Enter radius to search in specified area:', default_range)
 
 
@@ -57,8 +57,8 @@ if test:
 		#ERROR please input a target climb
 
 
-# img2 = Image.open('figures/09A21D41-981D-4FC1-A359-74653420A488_1_105_c.jpeg')
-# st.image(img2, caption='View of the Witch in the Needles, CA')
+img2 = Image.open('figures/09A21D41-981D-4FC1-A359-74653420A488_1_105_c.jpeg')
+st.image(img2, caption='View of the Witch in the Needles, CA')
 
 
 
