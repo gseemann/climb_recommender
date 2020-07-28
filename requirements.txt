@@ -1,5 +1,4 @@
 streamlit==0.53.0
-matplotlib==3.0.0
 mysql==5.7.24
 numpy==1.18.1
 pandas==1.0.3
