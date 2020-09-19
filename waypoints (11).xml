@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx version="1.1" creator="http://www.geoplaner.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<wpt lat="41.653" lon="-74.37805">
+<ele>396</ele>
+<name>WP01-A</name>
+</wpt>
+<wpt lat="41.66351" lon="-74.36363">
+<ele>540</ele>
+<name>WP02-B</name>
+</wpt>
+<wpt lat="41.67607" lon="-74.3468">
+<name>WP03-C</name>
+</wpt>
+<wpt lat="41.68402" lon="-74.3365">
+<ele>611</ele>
+<name>WP04-D</name>
+</wpt>
+<wpt lat="41.68914" lon="-74.32551">
+<name>WP05-E</name>
+</wpt>
+<wpt lat="41.68658" lon="-74.31177">
+<ele>471</ele>
+<name>WP06-F</name>
+</wpt>
+<wpt lat="41.75223" lon="-74.24806">
+<ele>287</ele>
+<name>WP07-G</name>
+</wpt>
+<wpt lat="41.75914" lon="-74.25939">
+<ele>187</ele>
+<name>WP08-H</name>
+</wpt>
+<wpt lat="41.77245" lon="-74.23844">
+<name>WP09-I</name>
+</wpt>
+<wpt lat="41.7617" lon="-74.22882">
+<ele>204</ele>
+<name>WP10-J</name>
+</wpt>
+<wpt lat="41.77142" lon="-74.24806">
+<name>WP11-K</name>
+</wpt>
+<wpt lat="41.70357" lon="-74.26351">
+<ele>593</ele>
+<name>WP12-L</name>
+</wpt>
+<wpt lat="41.71049" lon="-74.24325">
+<name>WP13-M</name>
+</wpt>
+<wpt lat="41.71715" lon="-74.22848">
+<ele>397</ele>
+<name>WP14-N</name>
+</wpt>
+<wpt lat="41.72406" lon="-74.22161">
+<name>WP15-O</name>
+</wpt>
+<wpt lat="41.72791" lon="-74.21165">
+<ele>317</ele>
+<name>WP16-P</name>
+</wpt>
+<wpt lat="41.73533" lon="-74.19414">
+<ele>308</ele>
+<name>WP17-Q</name>
+</wpt>
+<wpt lat="41.74327" lon="-74.18555">
+<ele>338</ele>
+<name>WP18-R</name>
+</wpt>
+<wpt lat="41.74914" lon="-74.17448">
+<ele>283</ele>
+<name>WP19-S</name>
+</wpt>
+<wpt lat="41.75298" lon="-74.16074">
+<ele>303</ele>
+<name>WP20-T</name>
+</wpt>
+<wpt lat="41.76296" lon="-74.1683">
+<name>WP21-U</name>
+</wpt>
+<wpt lat="41.77755" lon="-74.15113">
+<ele>285</ele>
+<name>WP22-V</name>
+</wpt>
+<wpt lat="41.77115" lon="-74.15628">
+<ele>335</ele>
+<name>WP23-W</name>
+</wpt>
+<wpt lat="41.78113" lon="-74.14014">
+<name>WP24-X</name>
+</wpt>
+<wpt lat="41.78011" lon="-74.12777">
+<ele>352</ele>
+<name>WP25-Y</name>
+</wpt>
+<wpt lat="41.77934" lon="-74.14426">
+<name>WP26-Z</name>
+</wpt>
+<wpt lat="41.75887" lon="-74.17963">
+<ele>156</ele>
+<name>WP27</name>
+</wpt>
+</gpx>
