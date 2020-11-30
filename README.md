@@ -1,6 +1,8 @@
 # climb_recommender
 ## Website
 - https://rockclimbing-recommender.herokuapp.com/
+## Blog
+- https://medium.com/@gabrielseemann/rock-climbing-recommendation-engine-9aada4c5f3c6
 
 ## Description
 Content based climbing recommendation system. Information about ~80,000 climbs (mostly across North America) 
