@@ -1,15 +1,16 @@
 # climb_recommender
+## Website
+- https://rockclimbing-recommender.herokuapp.com/
+## Blog
+- https://medium.com/@gabrielseemann/rock-climbing-recommendation-engine-9aada4c5f3c6
 
 ## Description
-Content based climbing recommendation system. Information about ~36,000 climbs (mostly across North America) 
+Content based climbing recommendation system. Information about ~80,000 climbs (mostly across North America) 
 - User provides
  - Reference climb
  - Zip code, or city & state
  - Search radius
  - Program then displays reference climb details and top 10 matches
- 
-## Demo
-- https://youtu.be/ev32cSixTOA
  
 ## Features
 - General features include
